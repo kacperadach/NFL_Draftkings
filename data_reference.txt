@@ -1,0 +1,42 @@
+# stats http://api.fantasy.nfl.com/v1/docs/service?serviceName=gameStats
+# 1 = games played
+# 2 = attempts
+# 3 = completions
+# 4 = incompletions
+# 5 = pass yards
+# 6 =  passing td's
+# 7 = interceptions thrown
+# 8 = sacked
+# 9 = 300-399 passing yard bonus
+# 10 = 400+ passing yard bonus
+# 11 =
+# 12
+# 13 = rushing attempts
+# 14 = rushing yards
+# 15 = rushing td's
+# 20 = receptions
+# 21 = receiveing yards
+# 22 = receiveing td's
+# 27 = kickoff/punt return yards
+# 28 = kickoff/punt td's
+# 29 = fumble recovered for td
+# 30 = fumbles lost
+# 31 = fumble
+# 32 = 2-point conversions
+
+# 45 = sacks
+# 46 = interceptions
+# 47 = fumbles recovered
+# 48 = forced fumbles
+# 49 = safeties
+# 50 = defense td
+# 51 = blocked kicks
+# 52 = kickoff and punt return yards
+# 53 = kickoff and punt return touchdowns
+# 54 = pts allowed
+# 62 = yards allowed
+# 77 = fumble return td
+
+
+things to check:
+- if a player has more rushing yards than a milestone (ex: 210 yards rushing) does he get the bonus twice?
