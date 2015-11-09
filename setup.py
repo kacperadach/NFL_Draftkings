@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
   name = 'PyFL',
   packages = ['PyFL'],
-  version = '0.1',
+  version = '0.2',
   description = 'A wrapper around the NFL API, with some DraftKings sprinkled in',
   author = 'Kacper Adach',
   author_email = 'kacperadach@gmail.com',
