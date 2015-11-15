@@ -61,6 +61,13 @@ def get_player_points(player_name, week, position=None):
     return process_as_dk(pos, draft_kings_stats)
 
 def get_player_week_by_week(player_name, end_week, position=None):
+    """
+    Get min, max, stdev and mean of player performances
+    
+    Example:
+        get_player_week_by_week('Tom Brady', 10)
+
+    """
     player_history = []
     for x in range(end_week):
         data = gather_json(x+1, position)
