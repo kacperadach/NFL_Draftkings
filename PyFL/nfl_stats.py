@@ -5,7 +5,11 @@ from player import Player, PlayerHistory
 from constants import *
 from util import process_as_dk
 
+
 def gather_json(week, position=None):
+    """
+    Utility method for acquiring json data from NFL api
+    """
     week = str(week)
     url = baseurl + week
     if position in valid_positions:
@@ -17,7 +21,13 @@ def gather_json(week, position=None):
         raise Exception('Incorrect parameters, could not load data')
 
 
-def get_top_performances(week, position=None, top_take=5, team=None):
+def get_top_performances(week, position=None, team=None, top_take=5):
+    """
+    Get the top performances for a certain week, can be specified by position and team
+
+    Example:
+        get_top_performances(4, team='NE', top_take=10)
+    """
     data = gather_json(week, position)
     all_players = []
     for player_info in data['players']:
@@ -37,6 +47,12 @@ def get_top_performances(week, position=None, top_take=5, team=None):
 
 
 def get_player_points(player_name, week, position=None):
+    """
+    Get a player's points for a certain week
+
+    Example:
+        get_player_points('Tom Brady', 1, position='QB')
+    """
     data = gather_json(week)
 
     stats = None
@@ -62,10 +78,10 @@ def get_player_points(player_name, week, position=None):
 
 def get_player_week_by_week(player_name, end_week, position=None):
     """
-    Get min, max, stdev and mean of player performances
+    Get a player's scores week by week along with a min, max, stdev and mean
     
     Example:
-        get_player_week_by_week('Tom Brady', 10)
+        get_player_week_by_week('Tom Brady', 10, position='QB')
 
     """
     player_history = []
