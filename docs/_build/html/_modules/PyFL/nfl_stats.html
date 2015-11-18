@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyFL.nfl_stats &mdash; PyFL  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="PyFL  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for PyFL.nfl_stats</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">Request</span><span class="p">,</span> <span class="n">urlopen</span><span class="p">,</span> <span class="n">URLError</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">player</span> <span class="kn">import</span> <span class="n">Player</span><span class="p">,</span> <span class="n">PlayerHistory</span>
+<span class="kn">from</span> <span class="nn">constants</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">util</span> <span class="kn">import</span> <span class="n">process_as_dk</span>
+
+<div class="viewcode-block" id="gather_json"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.gather_json">[docs]</a><span class="k">def</span> <span class="nf">gather_json</span><span class="p">(</span><span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">week</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">week</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="n">week</span>
+    <span class="k">if</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">valid_positions</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s">&#39;&amp;position=&#39;</span> <span class="o">+</span> <span class="n">position</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">URLError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Incorrect parameters, could not load data&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="get_top_performances"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.get_top_performances">[docs]</a><span class="k">def</span> <span class="nf">get_top_performances</span><span class="p">(</span><span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">top_take</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">gather_json</span><span class="p">(</span><span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+    <span class="n">all_players</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">player_info</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;players&#39;</span><span class="p">]:</span>
+        <span class="n">all_players</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Player</span><span class="p">(</span><span class="n">player_info</span><span class="p">,</span> <span class="n">week</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">all_players</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">team</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">team</span> <span class="o">==</span> <span class="n">team</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">player</span>
+                <span class="n">top_take</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">player</span>
+            <span class="n">top_take</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">top_take</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+
+</div>
+<div class="viewcode-block" id="get_player_points"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.get_player_points">[docs]</a><span class="k">def</span> <span class="nf">get_player_points</span><span class="p">(</span><span class="n">player_name</span><span class="p">,</span> <span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">gather_json</span><span class="p">(</span><span class="n">week</span><span class="p">)</span>
+
+    <span class="n">stats</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;players&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">player_name</span> <span class="ow">in</span> <span class="n">player</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]:</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">player</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">player</span><span class="p">[</span><span class="s">&#39;position&#39;</span><span class="p">]</span>
+            <span class="k">break</span>
+
+    <span class="n">draft_kings_stats</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">stats</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;player not found in data&#39;</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">91</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">num_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="n">draft_kings_stats</span><span class="p">[</span><span class="n">num_str</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s">&#39;stats&#39;</span><span class="p">][</span><span class="n">num_str</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">draft_kings_stats</span><span class="p">[</span><span class="n">num_str</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0&#39;</span>
+
+    <span class="k">return</span> <span class="n">process_as_dk</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">draft_kings_stats</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="get_player_week_by_week"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.get_player_week_by_week">[docs]</a><span class="k">def</span> <span class="nf">get_player_week_by_week</span><span class="p">(</span><span class="n">player_name</span><span class="p">,</span> <span class="n">end_week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get min, max, stdev and mean of player performances</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">        get_player_week_by_week(&#39;Tom Brady&#39;, 10)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">player_history</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">end_week</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">gather_json</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">player_info</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;players&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">player_name</span> <span class="ow">in</span> <span class="n">player_info</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]:</span>
+                <span class="n">player_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Player</span><span class="p">(</span><span class="n">player_info</span><span class="p">,</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+                <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">PlayerHistory</span><span class="p">(</span><span class="n">player_history</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
