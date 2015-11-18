@@ -1,0 +1,7 @@
+PyPI update instructions:
+
+1. Change version number in setup.py
+2. Push up corresponding tag to github
+    e.g. git tag <tag_number>
+         git push origin --tags
+3. python setup.py sdist upload

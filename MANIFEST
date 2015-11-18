@@ -2,4 +2,7 @@
 README
 setup.py
 PyFL/__init__.py
+PyFL/constants.py
 PyFL/nfl_stats.py
+PyFL/player.py
+PyFL/util.py
