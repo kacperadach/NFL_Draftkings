@@ -50,27 +50,38 @@
 <dl class="function">
 <dt id="PyFL.nfl_stats.gather_json">
 <code class="descclassname">PyFL.nfl_stats.</code><code class="descname">gather_json</code><span class="sig-paren">(</span><em>week</em>, <em>position=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyFL/nfl_stats.html#gather_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PyFL.nfl_stats.gather_json" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Utility method for acquiring json data from NFL api</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="PyFL.nfl_stats.get_player_points">
 <code class="descclassname">PyFL.nfl_stats.</code><code class="descname">get_player_points</code><span class="sig-paren">(</span><em>player_name</em>, <em>week</em>, <em>position=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyFL/nfl_stats.html#get_player_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PyFL.nfl_stats.get_player_points" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get a player&#8217;s points for a certain week</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd>get_player_points(&#8216;Tom Brady&#8217;, 1, position=&#8217;QB&#8217;)</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="PyFL.nfl_stats.get_player_week_by_week">
 <code class="descclassname">PyFL.nfl_stats.</code><code class="descname">get_player_week_by_week</code><span class="sig-paren">(</span><em>player_name</em>, <em>end_week</em>, <em>position=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyFL/nfl_stats.html#get_player_week_by_week"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PyFL.nfl_stats.get_player_week_by_week" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get min, max, stdev and mean of player performances</p>
+<dd><p>Get a player&#8217;s scores week by week along with a min, max, stdev and mean</p>
 <dl class="docutils">
 <dt>Example:</dt>
-<dd>get_player_week_by_week(&#8216;Tom Brady&#8217;, 10)</dd>
+<dd>get_player_week_by_week(&#8216;Tom Brady&#8217;, 10, position=&#8217;QB&#8217;)</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="PyFL.nfl_stats.get_top_performances">
-<code class="descclassname">PyFL.nfl_stats.</code><code class="descname">get_top_performances</code><span class="sig-paren">(</span><em>week</em>, <em>position=None</em>, <em>top_take=5</em>, <em>team=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyFL/nfl_stats.html#get_top_performances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PyFL.nfl_stats.get_top_performances" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">PyFL.nfl_stats.</code><code class="descname">get_top_performances</code><span class="sig-paren">(</span><em>week</em>, <em>position=None</em>, <em>team=None</em>, <em>top_take=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PyFL/nfl_stats.html#get_top_performances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PyFL.nfl_stats.get_top_performances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the top performances for a certain week, can be specified by position and team</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd>get_top_performances(4, team=&#8217;NE&#8217;, top_take=10)</dd>
+</dl>
+</dd></dl>
 
 </div>
 <div class="section" id="module-PyFL.player">

@@ -20,11 +20,15 @@ import shlex
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 absolute_path = os.environ.get('PYFL_PATH')
-sys.path.insert(0, os.path.abspath(absolute_path))
+
+if absolute_path:
+  sys.path.insert(0, os.path.abspath(absolute_path))
+  print 'Setting path to %s to' % absolute_path
+else:
+  sys.path.insert(0, os.path.abspath('.'))
+  print 'No path set; using docs for latest...'
 
 import PyFL
-print 'Checking absolute path was correctly set...'
-print PyFL
 
 # -- General configuration ------------------------------------------------
 
@@ -65,8 +69,7 @@ author = u'Author'
 #
 # The short X.Y version.
 
-# TODO - set to the most recent PyFL version
-version = ''
+version = PyFL.__version__
 # The full version, including alpha/beta/rc tags.
 release = ''
 

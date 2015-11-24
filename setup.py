@@ -7,7 +7,7 @@ setup(
   description = 'A wrapper around the NFL API, with some DraftKings sprinkled in',
   author = 'Kacper Adach',
   author_email = 'kacperadach@gmail.com',
-  url = 'https://github.com/kacperadach/draftkings_points_scripts',
+  url = 'pyfl.readthedocs.org',
   download_url = 'https://github.com/kacperadach/draftkings_points_scripts/tarball/0.1',
   keywords = ['nfl', 'draftkings'],
   classifiers = [],

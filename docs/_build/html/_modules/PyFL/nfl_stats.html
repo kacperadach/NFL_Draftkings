@@ -45,7 +45,11 @@
 <span class="kn">from</span> <span class="nn">constants</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">util</span> <span class="kn">import</span> <span class="n">process_as_dk</span>
 
+
 <div class="viewcode-block" id="gather_json"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.gather_json">[docs]</a><span class="k">def</span> <span class="nf">gather_json</span><span class="p">(</span><span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Utility method for acquiring json data from NFL api</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">week</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">week</span><span class="p">)</span>
     <span class="n">url</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="n">week</span>
     <span class="k">if</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">valid_positions</span><span class="p">:</span>
@@ -57,7 +61,13 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Incorrect parameters, could not load data&#39;</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="get_top_performances"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.get_top_performances">[docs]</a><span class="k">def</span> <span class="nf">get_top_performances</span><span class="p">(</span><span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">top_take</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="get_top_performances"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.get_top_performances">[docs]</a><span class="k">def</span> <span class="nf">get_top_performances</span><span class="p">(</span><span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">top_take</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the top performances for a certain week, can be specified by position and team</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        get_top_performances(4, team=&#39;NE&#39;, top_take=10)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">gather_json</span><span class="p">(</span><span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
     <span class="n">all_players</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">player_info</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;players&#39;</span><span class="p">]:</span>
@@ -77,6 +87,12 @@
 
 </div>
 <div class="viewcode-block" id="get_player_points"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.get_player_points">[docs]</a><span class="k">def</span> <span class="nf">get_player_points</span><span class="p">(</span><span class="n">player_name</span><span class="p">,</span> <span class="n">week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get a player&#39;s points for a certain week</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        get_player_points(&#39;Tom Brady&#39;, 1, position=&#39;QB&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">gather_json</span><span class="p">(</span><span class="n">week</span><span class="p">)</span>
 
     <span class="n">stats</span> <span class="o">=</span> <span class="bp">None</span>
@@ -102,10 +118,10 @@
 </div>
 <div class="viewcode-block" id="get_player_week_by_week"><a class="viewcode-back" href="../../PyFL.html#PyFL.nfl_stats.get_player_week_by_week">[docs]</a><span class="k">def</span> <span class="nf">get_player_week_by_week</span><span class="p">(</span><span class="n">player_name</span><span class="p">,</span> <span class="n">end_week</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get min, max, stdev and mean of player performances</span>
+<span class="sd">    Get a player&#39;s scores week by week along with a min, max, stdev and mean</span>
 <span class="sd">    </span>
 <span class="sd">    Example:</span>
-<span class="sd">        get_player_week_by_week(&#39;Tom Brady&#39;, 10)</span>
+<span class="sd">        get_player_week_by_week(&#39;Tom Brady&#39;, 10, position=&#39;QB&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">player_history</span> <span class="o">=</span> <span class="p">[]</span>
