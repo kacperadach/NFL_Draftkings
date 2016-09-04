@@ -6,4 +6,4 @@ PyPI update instructions:
          git push origin --tags
 3. python setup.py sdist upload
 
-python setup.py register sdist upload -r https://www.python.org/pypi
+HOME environment variable set to directory where .pypirc file is.

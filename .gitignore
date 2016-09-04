@@ -1,5 +1,6 @@
 .idea/
 *.pyc
+.pypirc
 /docs
 /dist
 run.py
@@ -11,3 +12,5 @@ NFL_Draftkings/constants.pyc
 *.sqlite
 NFL_Draftkings/run.py
 MANIFEST
+.gitconfig
+NFL_Draftkings.egg-info
