@@ -1,6 +1,7 @@
 .idea/
 *.pyc
 /docs
+/dist
 run.py
 NFL_Draftkings/ConvertToDraftKings.pyc
 NFL_Draftkings/GatherPlayerData.pyc
