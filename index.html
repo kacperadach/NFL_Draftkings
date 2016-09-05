@@ -1,0 +1,48 @@
+<html>
+    <head></head>
+    <body>
+        <h2>NFL_Draftkings</h2>
+        <h3>Public Methods</h3>
+        <ul>
+            <li>
+                <p>get_scores(name=None, position=None, team=None, week=None, season=None)</p>
+                <p>General method for getting score of any player, position or team in a specific season or week. If no arguments are specified, all players season stats from the latest season are returned.</p>
+                <span>Arguments:</span>
+                <ul>
+                    <li>name: String</li>
+                    <li>position: String</li>
+                    <li>team: String</li>
+                    <li>week: Integer</li>
+                    <li>season: Integer</li>
+                </ul>
+                <p>Return: A list of player dictionaries.</p>
+            </li>
+            <li>
+                <p>get_weekly_scores(name=None, position=None, team=None, weeks=None, season=None)</p>
+                <p>Method to get a player, position or team's scores week by week. If weeks is not specified it will be weeks 1-17.</p>
+                <span>Arguments:</span>
+                <ul>
+                    <li>name: String</li>
+                    <li>position: String</li>
+                    <li>team: String</li>
+                    <li>weeks: List or Tuple</li>
+                    <li>season: Integer</li>
+                </ul>
+                <p>Returns: A list of player dictionaries.</p>
+            </li>
+            <li>
+                <p>get_top_performers(position=None, team=None, week=None, season=None, top=10):</p>
+                <p>Method to get top performers for a given week or season, based on position, team or overall league.</p>
+                <span>Arguments:</span>
+                <ul>
+                    <li>position: String</li>
+                    <li>team: String</li>
+                    <li>week: Integer</li>
+                    <li>season: Integer</li>
+                    <li>top: Integer</li>
+                </ul>
+                <p>Returns: A list of player dictionaries.</p>
+            </li>
+        </ul>
+    </body>
+</html>
