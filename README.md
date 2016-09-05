@@ -36,3 +36,13 @@ pip install NFL_Draftkings
 ## Notes
 
 The stats key in the returned dictionaries is the amount of Draftkings points that player scored in the defined period. All methods have position, team, week and season arguments to specify searches as much as needed.
+
+## Updating a pypi module
+
+To update a pypi module version, create a new tag on github with the latest changes you want versioned. After you have pushed the new tag, update setup.py to change the version to that tag number. Then run the following command:
+
+```bash
+python setup.py sdist upload
+```
+
+This will upload the new version to pypi. If you are having trouble on windows, you need to set the HOME environment variable to where your .pypirc file is located so that you can be authenticated.
